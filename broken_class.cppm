@@ -34,3 +34,14 @@ public:
 			data[i].y = randomValue(m1, m2);
 		}
 	}
+	Point<T>& operator[](size_t index) {
+		if (index >= size) {
+			throw out_of_range("Point index out of range");
+		}
+		return data[index];
+	}
+	const Point<T>& operator[](size_t index) const {
+		if (index >= size) {
+			throw out_of_range("Point index out of range");
+		}
+		return data[index];
