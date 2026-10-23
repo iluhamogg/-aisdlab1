@@ -45,3 +45,37 @@ public:
 			throw out_of_range("Point index out of range");
 		}
 		return data[index];
+	}
+	BrokenLines operator+(const BrokenLines& other) const {
+		BrokenLines result(size + other.size);
+		for (size_t i = 0; i < size; ++i) {
+			result.data[i] = data[i];
+		}
+		for (size_t i = 0; i < other.size; ++i) {
+			result.data[size + i] = other.data[i];
+		}
+		return result;
+	}
+	BrokenLines operator+(const Point<T>& point) const {
+		BrokenLines result(size + 1);
+		for (size_t i = 0; i < size; ++i) {
+			result.data[i] = data[i];
+		}
+		result.data[size] = point;
+		return result;
+	}
+	size_t getSize() const {
+		return size;
+	}
+
+};
+
+export template<typename T>
+BrokenLines<T> operator+(const Point<T>& point, const BrokenLines<T>& line) {
+	BrokenLines<T> result(line.getSize() + 1);
+	result[0] = point;
+	for (size_t i = 0; i < line.getSize(); ++i) {
+		result[i + 1] = line[i];
+	}
+	return result;
+}
