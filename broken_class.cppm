@@ -67,6 +67,16 @@ public:
 	size_t getSize() const {
 		return size;
 	}
+	double getLength() const {
+		double length = 0;
+		for (size_t i = 1; i < size; ++i) {
+			double dx = abs(data[i].x - data[i - 1].x);
+			double dy = abs(data[i].y - data[i - 1].y);
+			length += sqrt(dx * dx + dy * dy);
+		}
+		return length;
+	}
+
 
 };
 
