@@ -70,6 +70,20 @@ public:
 		}
 		return data[index];
 	}
+	bool operator==(const BrokenLines& other) const {
+		if (size != other.size) {
+			return false;
+		}
+		for (size_t i = 0; i < size; ++i) {
+			if (!equalValues(data[i].x, other.data[i].x) || !equalValues(data[i].y, other.data[i].y)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	bool operator!=(const BrokenLines& other) const {
+		return !(*this == other);
+	}
 	BrokenLines operator+(const BrokenLines& other) const {
 		BrokenLines result(size + other.size);
 		for (size_t i = 0; i < size; ++i) {
@@ -103,6 +117,14 @@ public:
 
 
 };
+
+export template<typename T>
+ostream& operator<<(ostream& out, const BrokenLines<T>& line) {
+	for (size_t i = 0; i < line.getSize(); ++i) {
+		out << "Point " << i << ": (" << line[i].x << ", " << line[i].y << ")\n";
+	}
+	return out;
+}
 
 export template<typename T>
 BrokenLines<T> operator+(const Point<T>& point, const BrokenLines<T>& line) {

@@ -25,3 +25,16 @@ export complex<float> randomValue(complex<float> min, complex<float> max) {
 }
 export complex<double> randomValue(complex<double> min, complex<double> max) {
 	return { randomValue(min.real(), max.real()), randomValue(min.imag(), max.imag()) };
+}
+export template<typename T>
+bool equalValues(const T& a, const T& b) {
+	return abs(a - b) <= 0.000001;
+}
+export template<typename T>
+bool validRange(T m1, T m2) {
+	return m1 <= m2;
+}
+export template<typename T>
+bool validRange(complex<T> m1, complex<T> m2) {
+	return m1.real() <= m2.real() && m1.imag() <= m2.imag();
+}
