@@ -34,6 +34,30 @@ public:
 			data[i].y = randomValue(m1, m2);
 		}
 	}
+	BrokenLines(const BrokenLines& other) {
+		size = other.size;
+		data = new Point<T>[size];
+		for (size_t i = 0; i < size; ++i) {
+			data[i] = other.data[i];
+		}
+	}
+	BrokenLines& operator=(const BrokenLines& other) {
+		if (this == &other) {
+			return *this;
+		}
+		Point<T>* newData = new Point<T>[other.size];
+		for (size_t i = 0; i < other.size; ++i) {
+			newData[i] = other.data[i];
+		}
+		delete[] data;
+		data = newData;
+		size = other.size;
+		return *this;
+	}
+	~BrokenLines() {
+		delete[] data;
+	}
+
 	Point<T>& operator[](size_t index) {
 		if (index >= size) {
 			throw out_of_range("Point index out of range");
