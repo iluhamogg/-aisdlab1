@@ -13,6 +13,7 @@ target_sources("labb1"
   PRIVATE
     "main.cpp"
   PRIVATE FILE_SET "modules" TYPE CXX_MODULES FILES
-    "broken_class.cppm")
+    "broken_class.cppm"
+    "functions.cppm")
 
 target_compile_options(labb1 PRIVATE /W4)
