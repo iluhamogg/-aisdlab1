@@ -8,15 +8,9 @@ export BrokenLines<double> createTriangle(const Point<double>& start, double a, 
 		throw invalid_argument("invalid triangle parametres");
 
 	}
-	double radians = angle * numbers::pi / 180.0;
-	Point<double> left = {
-		start.x - a * sin(radians / 2.0),
-		start.y - a * cos(radians / 2.0)
-	};
-	Point<double> right = {
-	start.x + a * sin(radians / 2.0),
-	start.y - a * cos(radians / 2.0)
-	};
+	double radians = angle * numbers::pi / 180;
+	Point<double> left = { start.x - a * sin(radians / 2), start.y - a * cos(radians / 2)};
+	Point<double> right = {start.x + a * sin(radians / 2), start.y - a * cos(radians / 2)};
 	BrokenLines<double> triangle(4);
 	triangle[0] = start;
 	triangle[1] = left;

@@ -84,22 +84,38 @@ public:
 	bool operator!=(const BrokenLines& other) const {
 		return !(*this == other);
 	}
-	BrokenLines operator+(const BrokenLines& other) const {
-		BrokenLines result(size + other.size);
+	BrokenLines& operator+=(const BrokenLines& other) {
+		Point<T>* newData = new Point<T>[size + other.size];
 		for (size_t i = 0; i < size; ++i) {
-			result.data[i] = data[i];
+			newData[i] = data[i];
 		}
 		for (size_t i = 0; i < other.size; ++i) {
-			result.data[size + i] = other.data[i];
+			newData[size + i] = other.data[i];
 		}
+		delete[] data;
+		data = newData;
+		size += other.size;
+		return *this;
+	}
+	BrokenLines& operator+=(const Point<T>& point) {
+		Point<T>* newData = new Point<T>[size + 1];
+		for (size_t i = 0; i < size; ++i) {
+			newData[i] = data[i];
+		}
+		newData[size] = point;
+		delete[] data;
+		data = newData;
+		size += 1;
+		return *this;
+	}
+	BrokenLines operator+(const BrokenLines& other) const {
+		BrokenLines result(*this);
+		result += other;
 		return result;
 	}
 	BrokenLines operator+(const Point<T>& point) const {
-		BrokenLines result(size + 1);
-		for (size_t i = 0; i < size; ++i) {
-			result.data[i] = data[i];
-		}
-		result.data[size] = point;
+		BrokenLines result(*this);
+		result += point;
 		return result;
 	}
 	size_t getSize() const {
@@ -128,10 +144,7 @@ ostream& operator<<(ostream& out, const BrokenLines<T>& line) {
 
 export template<typename T>
 BrokenLines<T> operator+(const Point<T>& point, const BrokenLines<T>& line) {
-	BrokenLines<T> result(line.getSize() + 1);
-	result[0] = point;
-	for (size_t i = 0; i < line.getSize(); ++i) {
-		result[i + 1] = line[i];
-	}
+	BrokenLines<T> result(point);
+	result += line;
 	return result;
 }
